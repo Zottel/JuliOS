@@ -14,27 +14,23 @@ struct gdt_entry
 	// Second Doubleword
 	u8int base_middle;
 	u8int access;
-	u8int flags;
+	u8int granularity;
 	u8int base_high;
-} __attribute__((packed));
+}
+__attribute__((packed));
 
 class GDT
 {
 	private:
-		u16int gdt_size;
-		struct gdt_header *header;
-		struct gdt_entry *entry;
+		u16int used_entries;
+		struct gdt_entry entries[32] __attribute__ ((aligned (8)));
+		void addSegment (u32int base, u32int limit, u8int present, u8int system, u8int type, u8int privLevel, u8int granularity);
 		
 	public:
-		GDT(u16int size);
-		
-		void load();
-		
-		u16int create_descriptor();
-		
-		void descriptor_setbase(u16int descriptor, u32int base);
-		void descriptor_setlimit(u16int descriptor, u32int base);
-		void descriptor_settype(u16int descriptor, u8int code);
-		
+		GDT();
 		void debug(Screen *Screen);
+		void addDataSegment (u32int base, u32int limit, u8int readWrite, u8int expandDown, u8int privLevel, u8int byteGranularity);
+		void addCodeSegment (u32int base, u32int limit, u8int readExecute, u8int privLevel, u8int byteGranularity);
+
+		void install();
 };

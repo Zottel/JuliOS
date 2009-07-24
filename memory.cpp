@@ -220,3 +220,14 @@ void operator delete[] (void *p)
 {
 	default_mem->free(p);
 }
+
+void *memset (void *p, int c, size_t n)
+{
+	u8int *cur = (u8int *) p;
+	while (n > 0) {
+		*cur = c;
+		cur++;
+		n--;
+	}
+	return p;
+}

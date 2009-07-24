@@ -7,9 +7,10 @@ CC := /usr/bin/gcc
 CPLUSPLUSC := /usr/bin/g++
 ASM := nasm
 
-CFLAGS := -ffreestanding -Wall -Werror -nostdlib -nostartfiles -nodefaultlibs -I "$(CURDIR)" "$(CFLAGS)"
+CFLAGS := -m32 -ffreestanding -Wall -Werror -nostdlib -nostartfiles -nodefaultlibs -I "$(CURDIR)" $(CFLAGS)
 #CPLUSPLUSFLAGS := -ffreestanding -nostdlib -fno-builtin -fno-rtti -fno-exceptions
-CPLUSPLUSFLAGS := -Wall -nostartfiles -nostdlib -fno-builtin -fno-rtti -fno-exceptions -I "$(CURDIR)"
+CPLUSPLUSFLAGS := -m32 -Wall -nostartfiles -nostdlib -fno-builtin -fno-rtti -fno-exceptions -I "$(CURDIR)" $(CPLUSPLUSFLAGS)
+LDFLAGS := -melf_i386 -nostdlib $(LDFLAGS)
 
 OBJFILES := startup.o kernel.o screen.o memory.o io.o interrupts.o keyboard.o multiboot.o gdt.o
 OUTFILE := kernel
@@ -19,7 +20,7 @@ OUTFILE := kernel
 # Rules
 kernel: $(OBJFILES)
 	@echo "Assembling kernel image ... "
-	@ld -T ld.conf -nostdlib -o kernel $(OBJFILES)
+	@ld $(LDFLAGS) -T ld.conf -o kernel $(OBJFILES)
 	
 %.o: %.asm Makefile
 	@echo "Compiling $<... "

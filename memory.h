@@ -37,6 +37,8 @@ void set_memory_handler(Memory *mem);
 void *malloc(size_t);
 void free(void *p);
 
+void *memset (void *s, int c, size_t n);
+
 void * operator new (size_t size);
 void * operator new[] (size_t size);
 

@@ -11,7 +11,7 @@
 int kmain(unsigned long magic, multiboot_info_t *mbi)
 {
 	Screen Title((char *) 0xb8000, 80, 1);
-	Title.setcolor(0x47);
+	Title.setcolor(0x4E);
 	Title.clear();
 	Title.printf("         JuliOS - Lame Algorithms paired with incredibly stupid design.");
 	
@@ -19,7 +19,7 @@ int kmain(unsigned long magic, multiboot_info_t *mbi)
 	Screen Screen((char *) (0xb8000 + (0x50 * 2)), 80, 25);
 	
 	// Set the color to yellow on dark grey and clear the screen.
-	Screen.setcolor(0x74);
+	Screen.setcolor(0xE4);
 	Screen.clear();
 	
 	// Now we're ready to display our first message.
@@ -34,7 +34,7 @@ int kmain(unsigned long magic, multiboot_info_t *mbi)
 	Memory mem;
 	// Register a memory pool to allocate from.
 	mem.register_pool((void *)0x200000, 0x100000);
-	// Move the manager from stack to heap.
+	// Have the chicken hatch from it's own egg.
 	Memory *memory = (Memory *) mem.allocopy(((void *) &mem), sizeof(Memory));
 	// And have the copy run the show.
 	set_memory_handler(memory);
@@ -46,8 +46,10 @@ int kmain(unsigned long magic, multiboot_info_t *mbi)
 	// Produce a triple fault (for comparison to those we don't want :)
 	//asm volatile ("int $0x01");
 	
-	GDT *gdt = new GDT(3);
-	gdt->load();
+	GDT *gdt = new GDT();
+	gdt->addCodeSegment (0, 0xFFFFF, 0, 0, 0);
+	gdt->addDataSegment (0, 0xFFFFF, 1, 0, 0, 0);
+	
 	//gdt->debug(&Screen);
 	
 	
