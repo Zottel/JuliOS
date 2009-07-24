@@ -21,14 +21,14 @@ struct gdt_entry
 class GDT
 {
 	private:
-		struct gdt_header *header;
 		u16int gdt_size;
+		struct gdt_header *header;
 		struct gdt_entry *entry;
 		
 	public:
 		GDT(u16int size);
 		
-		void load(u16int code_descriptor);
+		void load();
 		
 		u16int create_descriptor();
 		

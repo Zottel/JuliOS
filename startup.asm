@@ -17,10 +17,10 @@ MultiBootHeader:
    dd CHECKSUM
 
 ; reserve initial kernel stack space
-STACKSIZE equ 0x4000                  ; that's 16k.
+STACKSTART equ 0xA0000                  ; that's 16k.
 
 loader:
-   mov esp, stack+STACKSIZE        ; set up the stack
+   mov esp, STACKSTART             ; set up the stack
    push ebx                        ; Multiboot info structure
    push eax                        ; Multiboot magic number
 
@@ -48,8 +48,4 @@ static_dtors_loop:
 
    hlt                             ; halt machine should kernel return
 
-section .bss
-align 32
-stack:
-   resb STACKSIZE                     ; reserve 16k stack on a quadword boundary
 
