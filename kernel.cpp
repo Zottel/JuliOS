@@ -27,8 +27,8 @@ int kmain(unsigned long magic, multiboot_info_t *mbi)
 	
 	// I LOVE Multiboot!
 	//Screen.print_string("\nErstelle Multiboot Objekt.\n");
-	Multiboot MBoot(magic, mbi);
-	MBoot.debug(&Screen);
+	//Multiboot MBoot(magic, mbi);
+	//MBoot.debug(&Screen);
 	
 	// Create a memory manager - stored on the stack for now.
 	Memory mem;
