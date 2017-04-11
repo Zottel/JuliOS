@@ -8,6 +8,9 @@
 #include <multiboot.h>
 #include <gdt.h>
 
+// Prevent name mangling for interfacing with ASM.
+extern "C" int kmain(unsigned long magic, multiboot_info_t *mbi);
+
 int kmain(unsigned long magic, multiboot_info_t *mbi)
 {
 	Screen Title((char *) 0xb8000, 80, 1);

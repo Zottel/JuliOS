@@ -1,5 +1,5 @@
 global loader           ; making entry point visible to linker
-extern _Z5kmainmP14multiboot_info            ; main is defined elsewhere
+extern _kmain            ; main is defined elsewhere
 extern start_ctors, end_ctors, start_dtors, end_dtors
 
 ; setting up the Multiboot header - see GRUB docs for details
@@ -34,7 +34,7 @@ static_ctors_loop:
    cmp ebx, end_ctors
    jb .body
 
-   call _Z5kmainmP14multiboot_info                      ; call kernel proper
+   call _kmain                      ; call kernel proper
 
 static_dtors_loop:
    mov ebx, start_dtors
